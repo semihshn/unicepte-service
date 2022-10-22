@@ -25,6 +25,7 @@ public class StudentEntity extends BaseEntity {
     @OneToMany(mappedBy = "student")
     private List<GroupEntity> groupEntityList;
 
+
     public static StudentEntity from(Student student) {
         StudentEntity studentEntity = new StudentEntity();
         studentEntity.setId(student.getStudentId());
