@@ -24,44 +24,39 @@ public class GroupController {
 
     @PostMapping()
     public ResponseEntity<GroupCreateResponse> create(@RequestBody @Valid GroupCreateRequest request) {
-        Group group = groupService.create(request.convertToGroup());
-        GroupCreateResponse groupCreateResponse = GroupCreateResponse.builder()
-                .groupId(group.getGroupId())
-                .build();
+        Group group = request.convertToGroup();
 
-        return new ResponseEntity<>(groupCreateResponse, HttpStatus.CREATED);
+        Group createdGroup = groupService.create(group, request.getStudentIds());
+
+        return new ResponseEntity<>(GroupCreateResponse.convertToGroupResponse(createdGroup), HttpStatus.CREATED);
     }
 
     @GetMapping("/{groupId}")
     public ResponseEntity<GroupResponse> retrieve(@PathVariable Long groupId) {
         Group group = groupService.retrieve(groupId);
+
         GroupResponse groupResponse = GroupResponse.from(group);
+
         return new ResponseEntity<>(groupResponse, HttpStatus.OK);
     }
 
     @GetMapping()
     public ResponseEntity<List<GroupResponse>> retrieveAll() {
         List<Group> groupList = groupService.retrieveAll();
-        List<GroupResponse> groupResponseList = groupList.stream()
-                .map(GroupResponse::from)
-                .toList();
 
-        return new ResponseEntity<>(groupResponseList, HttpStatus.OK);
+        return new ResponseEntity<>(GroupResponse.from(groupList), HttpStatus.OK);
     }
 
     @PutMapping()
-    public ResponseEntity<GroupUpdateResponse> update(@RequestBody @Valid GroupUpdateRequest request){
+    public ResponseEntity<GroupUpdateResponse> update(@RequestBody @Valid GroupUpdateRequest request) {
         Group group = groupService.update(request.convertToGroup());
-        GroupUpdateResponse groupUpdateResponse = GroupUpdateResponse.builder()
-                .groupId(group.getGroupId())
-                .build();
 
-        return new ResponseEntity<>(groupUpdateResponse, HttpStatus.OK);
+        return new ResponseEntity<>(GroupUpdateResponse.from(group), HttpStatus.OK);
     }
 
     @DeleteMapping("/{groupId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void delete(@PathVariable Long groupId){
+    public void delete(@PathVariable Long groupId) {
         groupService.delete(groupId);
     }
 }

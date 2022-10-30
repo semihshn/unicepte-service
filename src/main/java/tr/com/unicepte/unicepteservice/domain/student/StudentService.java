@@ -2,6 +2,8 @@ package tr.com.unicepte.unicepteservice.domain.student;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import tr.com.unicepte.unicepteservice.domain.faculty.Faculty;
+import tr.com.unicepte.unicepteservice.domain.port.FacultyPort;
 import tr.com.unicepte.unicepteservice.domain.port.StudentPort;
 import tr.com.unicepte.unicepteservice.domain.util.exception.ExceptionType;
 import tr.com.unicepte.unicepteservice.domain.util.exception.UcepteDataNotFoundException;
@@ -13,11 +15,12 @@ import java.util.List;
 public class StudentService {
 
     private final StudentPort studentPort;
+    private final FacultyPort facultyPort;
 
     public Student create(Student student) {
-        Student createdStudent = studentPort.create(student);
+        Faculty faculty = facultyPort.retrieve(student.getFacultyId());
 
-        return createdStudent;
+        return studentPort.create(student, faculty);
     }
 
     public List<Student> retrieveAll() {

@@ -4,28 +4,33 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import tr.com.unicepte.unicepteservice.domain.group.Group;
 import tr.com.unicepte.unicepteservice.domain.student.Student;
 
-import javax.validation.constraints.NotBlank;
 import java.time.LocalDate;
+import java.util.List;
 
 @Getter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class StudentResponse {
-    private Long studentId;
     private String firstName;
     private String lastName;
     private LocalDate birthDate;
+    private Long facultyId;
 
     public static StudentResponse from(Student student) {
         return StudentResponse.builder()
-                .studentId(student.getStudentId())
                 .firstName(student.getFirstName())
                 .lastName(student.getLastName())
                 .birthDate(student.getBirthDate())
+                .facultyId(student.getFacultyId())
                 .build();
+    }
+
+    public static List<StudentResponse> from(List<Student> students) {
+        return students.stream()
+                .map(StudentResponse::from)
+                .toList();
     }
 }

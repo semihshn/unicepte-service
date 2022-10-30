@@ -21,11 +21,15 @@ public class StudentCreateRequest {
 
     private LocalDate birthDate;
 
+    @NotNull
+    private Long facultyId;
+
     public Student convertToStudent(){
         return Student.builder()
                 .firstName(firstName)
                 .lastName(lastName)
                 .birthDate(birthDate)
+                .facultyId(facultyId)
                 .build();
     }
 }

@@ -14,16 +14,12 @@ public class GroupUpdateRequest {
     @NotNull
     private Long groupId;
 
-    @NotNull
-    private Long studentId;
-
     @NotBlank
     private String name;
 
     public Group convertToGroup(){
         return Group.builder()
                 .groupId(groupId)
-                .studentId(studentId)
                 .name(name)
                 .build();
     }

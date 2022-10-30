@@ -6,21 +6,24 @@ import tr.com.unicepte.unicepteservice.domain.group.Group;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import java.util.List;
 
 @Getter
 @Setter
 public class GroupCreateRequest {
 
-    @NotNull
-    private Long studentId;
+    private List<Long> studentIds;
 
     @NotBlank
     private String name;
 
-    public Group convertToGroup(){
+    @NotNull
+    private Long facultyId;
+
+    public Group convertToGroup() {
         return Group.builder()
-                .studentId(studentId)
                 .name(name)
+                .facultyId(facultyId)
                 .build();
     }
 }
