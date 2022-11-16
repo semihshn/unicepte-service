@@ -11,7 +11,11 @@ public enum ExceptionType {
 
     STUDENT_DATA_NOT_FOUND(1001, "Öğrenci bulunamadı"),
     GROUP_DATA_NOT_FOUND(1002, "Grup bulunamadı"),
-    FACULTY_DATA_NOT_FOUND(1003, "Fakülte bulunamadı");
+    FACULTY_DATA_NOT_FOUND(1003, "Fakülte bulunamadı"),
+
+    COLLECTION_SIZE_EXCEPTION(2001, "Liste boyutları uyuşmuyor");
+
+
 
     private final Integer code;
     private final String message;

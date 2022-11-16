@@ -26,4 +26,6 @@ public class Student {
     private String lastName;
 
     private LocalDate birthDate;
+
+    private Long facultyId;
 }

@@ -25,23 +25,25 @@ public class FacultyController {
     @PostMapping()
     public ResponseEntity<FacultyCreateResponse> create(@RequestBody @Valid FacultyCreateRequest request){
         Faculty faculty = facultyService.create(request.convertToFaculty());
-        FacultyCreateResponse facultyCreateResponse = FacultyCreateResponse.builder()
-                .facultyId(faculty.getFacultyId())
-                .build();
-        return new ResponseEntity<>(facultyCreateResponse, HttpStatus.CREATED);
+
+        return new ResponseEntity<>(FacultyCreateResponse.convertToFacultyResponse(faculty), HttpStatus.CREATED);
     }
 
     @GetMapping()
     public ResponseEntity<List<FacultyResponse>> retrieveAll(){
         List<Faculty> facultyList = facultyService.retrieveAll();
+
         List<FacultyResponse> facultyResponseList = facultyList.stream().map(FacultyResponse::from).toList();
+
         return new ResponseEntity<>(facultyResponseList, HttpStatus.OK);
     }
 
     @GetMapping("/{facultyId}")
     public ResponseEntity<FacultyResponse> retrieve(@PathVariable Long facultyId){
         Faculty faculty = facultyService.retrieve(facultyId);
+
         FacultyResponse facultyResponse = FacultyResponse.from(faculty);
+
         return new ResponseEntity<>(facultyResponse, HttpStatus.OK);
     }
 
@@ -49,10 +51,8 @@ public class FacultyController {
     @PutMapping()
     public ResponseEntity<FacultyUpdateResponse> update(@RequestBody @Valid FacultyUpdateRequest request) {
         Faculty faculty = facultyService.update(request.convertToFaculty());
-        FacultyUpdateResponse facultyUpdateResponse = FacultyUpdateResponse.builder()
-                .facultyId(faculty.getFacultyId())
-                .build();
-        return new ResponseEntity<>(facultyUpdateResponse, HttpStatus.OK);
+
+        return new ResponseEntity<>(FacultyUpdateResponse.from(faculty), HttpStatus.OK);
     }
 
     @DeleteMapping("/{facultyId}")

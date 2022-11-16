@@ -3,6 +3,7 @@ package tr.com.unicepte.unicepteservice.adapter.jpa.student;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import tr.com.unicepte.unicepteservice.adapter.jpa.common.Status;
+import tr.com.unicepte.unicepteservice.domain.faculty.Faculty;
 import tr.com.unicepte.unicepteservice.domain.port.StudentPort;
 import tr.com.unicepte.unicepteservice.domain.student.Student;
 import tr.com.unicepte.unicepteservice.domain.util.exception.ExceptionType;
@@ -17,10 +18,22 @@ public class StudentJpaAdapter implements StudentPort {
     private final StudentJpaRepository studentJpaRepository;
 
     @Override
-    public Student create(Student student) {
-        StudentEntity studentEntity = StudentEntity.from(student);
+    public Student create(Student student, Faculty faculty) {
+        StudentEntity studentEntity = StudentEntity.from(student, faculty);
         studentEntity.setStatus(Status.ACTIVE);
         return studentJpaRepository.save(studentEntity).toModel();
+    }
+
+    @Override
+    public List<Student> create(List<Student> students) {
+        List<StudentEntity> studentEntities = students.stream()
+                .map(StudentEntity::from)
+                .toList();
+
+        return studentJpaRepository.saveAll(studentEntities)
+                .stream()
+                .map(StudentEntity::toModel)
+                .toList();
     }
 
     @Override
@@ -28,6 +41,14 @@ public class StudentJpaAdapter implements StudentPort {
         return studentJpaRepository.findById(studentId)
                 .orElseThrow(() -> new UcepteDataNotFoundException(ExceptionType.STUDENT_DATA_NOT_FOUND))
                 .toModel();
+    }
+
+    @Override
+    public List<Student> retrieve(List<Long> studentIds) {
+        return studentJpaRepository.findAllByIdIn(studentIds)
+                .stream()
+                .map(StudentEntity::toModel)
+                .toList();
     }
 
     @Override

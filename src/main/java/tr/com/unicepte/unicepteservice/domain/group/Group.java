@@ -4,8 +4,10 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 import tr.com.unicepte.unicepteservice.adapter.jpa.common.Status;
+import tr.com.unicepte.unicepteservice.domain.student.Student;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Getter
 @Setter
@@ -22,5 +24,7 @@ public class Group {
 
     private String name;
 
-    private Long studentId;
+    private Long facultyId;
+
+    private List<Student> students;
 }

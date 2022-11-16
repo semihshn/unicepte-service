@@ -3,10 +3,9 @@ package tr.com.unicepte.unicepteservice.adapter.jpa.group;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import tr.com.unicepte.unicepteservice.adapter.jpa.common.Status;
-import tr.com.unicepte.unicepteservice.adapter.jpa.student.StudentEntity;
+import tr.com.unicepte.unicepteservice.domain.faculty.Faculty;
 import tr.com.unicepte.unicepteservice.domain.group.Group;
 import tr.com.unicepte.unicepteservice.domain.port.GroupPort;
-import tr.com.unicepte.unicepteservice.domain.student.Student;
 import tr.com.unicepte.unicepteservice.domain.util.exception.ExceptionType;
 import tr.com.unicepte.unicepteservice.domain.util.exception.UcepteDataNotFoundException;
 
@@ -19,8 +18,8 @@ public class GroupJpaAdapter implements GroupPort {
     private final GroupJpaRepository groupJpaRepository;
 
     @Override
-    public Group create(Group group, Student student) {
-        GroupEntity groupEntity = GroupEntity.from(group, student);
+    public Group create(Group group, Faculty faculty) {
+        GroupEntity groupEntity = GroupEntity.from(group, faculty);
         groupEntity.setStatus(Status.ACTIVE);
         return groupJpaRepository.save(groupEntity).toModel();
     }
@@ -40,10 +39,9 @@ public class GroupJpaAdapter implements GroupPort {
     }
 
     @Override
-    public Group update(Group group, Student student) {
-        StudentEntity studentEntity = StudentEntity.from(student);
+    public Group update(Group group) {
 
-        GroupEntity updateEntity = GroupEntity.from(group, student);
+        GroupEntity updateEntity = GroupEntity.from(group);
         return groupJpaRepository.save(updateEntity).toModel();
     }
 

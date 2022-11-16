@@ -25,11 +25,8 @@ public class StudentController {
     @PostMapping()
     public ResponseEntity<StudentCreateResponse> create(@RequestBody @Valid StudentCreateRequest request) {
         Student student = studentService.create(request.convertToStudent());
-        StudentCreateResponse studentCreateResponse = StudentCreateResponse.builder()
-                .studentId(student.getStudentId())
-                .build();
 
-        return new ResponseEntity<>(studentCreateResponse, HttpStatus.CREATED);
+        return new ResponseEntity<>(StudentCreateResponse.convertToStudentResponse(student), HttpStatus.CREATED);
     }
 
     @GetMapping("/{studentId}")
@@ -42,21 +39,15 @@ public class StudentController {
     @GetMapping()
     public ResponseEntity<List<StudentResponse>> retrieveAll() {
         List<Student> studentList = studentService.retrieveAll();
-        List<StudentResponse> studentResponseList = studentList.stream()
-                .map(StudentResponse::from)
-                .toList();
 
-        return new ResponseEntity<>(studentResponseList, HttpStatus.OK);
+        return new ResponseEntity<>(StudentResponse.from(studentList), HttpStatus.OK);
     }
 
     @PutMapping()
     public ResponseEntity<StudentUpdateResponse> update(@RequestBody @Valid StudentUpdateRequest request) {
         Student student = studentService.update(request.convertToStudent());
-        StudentUpdateResponse studentUpdateResponse = StudentUpdateResponse.builder()
-                .studentId(student.getStudentId())
-                .build();
 
-        return new ResponseEntity<>(studentUpdateResponse, HttpStatus.OK);
+        return new ResponseEntity<>(StudentUpdateResponse.from(student), HttpStatus.OK);
     }
 
     @DeleteMapping("/{studentId}")
