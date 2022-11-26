@@ -20,7 +20,6 @@ public class StudentJpaAdapter implements StudentPort {
     @Override
     public Student create(Student student, Faculty faculty) {
         StudentEntity studentEntity = StudentEntity.from(student, faculty);
-        studentEntity.setStatus(Status.ACTIVE);
         return studentJpaRepository.save(studentEntity).toModel();
     }
 

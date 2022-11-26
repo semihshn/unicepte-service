@@ -26,7 +26,13 @@ public class BaseEntity {
     @LastModifiedDate
     protected LocalDateTime modifiedDate;
 
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
+    @Enumerated(value = EnumType.STRING)
     protected Status status;
+
+    @PrePersist
+    void fillPersistent() {
+        if (status == null) {
+            this.status = Status.ACTIVE;
+        }
+    }
 }

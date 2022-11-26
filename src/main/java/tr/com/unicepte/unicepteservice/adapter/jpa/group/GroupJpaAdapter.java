@@ -20,7 +20,6 @@ public class GroupJpaAdapter implements GroupPort {
     @Override
     public Group create(Group group, Faculty faculty) {
         GroupEntity groupEntity = GroupEntity.from(group, faculty);
-        groupEntity.setStatus(Status.ACTIVE);
         return groupJpaRepository.save(groupEntity).toModel();
     }
 
