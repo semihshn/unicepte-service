@@ -19,7 +19,6 @@ public class FacultyJpaAdapter implements FacultyPort {
     @Override
     public Faculty create(Faculty faculty) {
         FacultyEntity facultyEntity = FacultyEntity.from(faculty);
-        facultyEntity.setStatus(Status.ACTIVE);
         return facultyJpaRepository.save(facultyEntity).toModel();
     }
 

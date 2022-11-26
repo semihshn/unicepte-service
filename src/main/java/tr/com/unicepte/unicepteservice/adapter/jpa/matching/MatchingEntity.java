@@ -2,6 +2,7 @@ package tr.com.unicepte.unicepteservice.adapter.jpa.matching;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.Where;
 import tr.com.unicepte.unicepteservice.adapter.jpa.common.BaseEntity;
 import tr.com.unicepte.unicepteservice.adapter.jpa.group.GroupEntity;
 import tr.com.unicepte.unicepteservice.adapter.jpa.student.StudentEntity;
@@ -15,6 +16,7 @@ import javax.persistence.Table;
 @Setter
 @Entity(name = "matching")
 @Table(name = "matching")
+@Where(clause = "status <> 'DELETED'")
 public class MatchingEntity extends BaseEntity {
 
     @ManyToOne

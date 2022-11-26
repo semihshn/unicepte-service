@@ -29,7 +29,6 @@ public class MatchingJpaAdapter implements MatchingPort {
                     MatchingEntity matchingEntity = new MatchingEntity();
                     matchingEntity.setGroup(groupEntity);
                     matchingEntity.setStudent(studentEntity);
-                    matchingEntity.setStatus(Status.ACTIVE);
                     return matchingEntity;
                 }).toList();
 

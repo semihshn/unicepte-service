@@ -2,6 +2,7 @@ package tr.com.unicepte.unicepteservice.adapter.jpa.group;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.Where;
 import tr.com.unicepte.unicepteservice.adapter.jpa.common.BaseEntity;
 import tr.com.unicepte.unicepteservice.adapter.jpa.faculty.FacultyEntity;
 import tr.com.unicepte.unicepteservice.domain.faculty.Faculty;
@@ -16,6 +17,7 @@ import javax.persistence.Table;
 @Setter
 @Entity(name = "groups")
 @Table(name = "groups")
+@Where(clause = "status <> 'DELETED'")
 public class GroupEntity extends BaseEntity {
 
     private String name;
